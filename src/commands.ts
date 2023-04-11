@@ -18,21 +18,19 @@ const createReactComponent = async (contextSelection: Uri, p: { fsPath: string }
 
         const workspaceConfiguration = vscode.workspace.getConfiguration();
         const createCssFile = workspaceConfiguration.get<boolean>('re-create.createCssFile');
-        const useModuleCss = workspaceConfiguration.get<boolean>('re-create.useCssModules');
+        const cssModulesPrefix = workspaceConfiguration.get<string>('re-create.cssModulesPrefix');
         const importReact = workspaceConfiguration.get<boolean>('re-create.importReact');
 
         const contextPath = normalizePath(contextSelection);
         const newComponentFolderUri = `${contextPath}${componentName}`;
         const newComponentUri = `${contextPath}${componentName}/${componentName}.tsx`;
-        const componentTemplate = getComponentTemplate(componentName, importReact);
+        const componentTemplate = getComponentTemplate(componentName, importReact, cssModulesPrefix);
 
         await mkdir(newComponentFolderUri);
         await writeFile(newComponentUri, componentTemplate);
 
         if (createCssFile) {
-            const newStyleUri = useModuleCss
-                ? `${contextPath}${componentName}/${componentName}.module.css`
-                : `${contextPath}${componentName}/${componentName}.css`;
+            const newStyleUri = `${contextPath}${componentName}/${componentName}${cssModulesPrefix}.css`;
             await writeFile(newStyleUri, new Uint8Array([]));
         }
 

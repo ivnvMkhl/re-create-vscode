@@ -1,7 +1,7 @@
-const getComponentTemplate = (componentName: string, importReact?: boolean) => {
+const getComponentTemplate = (componentName: string, importReact?: boolean, cssModulesPrefix?: string) => {
     const importReactString = `import ${importReact ? 'React, ' : ''}{ FC } from "react";`;
     const componentTemplate = `${importReactString}
-import styles from './${componentName}.module.css';
+import styles from './${componentName}${cssModulesPrefix}.css';
                                               
 type ${componentName}Props = {};
                                               

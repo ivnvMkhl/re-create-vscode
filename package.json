@@ -37,15 +37,15 @@
                     "default": true,
                     "description": "Create ${componentName} css file"
                 },
-                "re-create.useCssModules": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Create ${componentName}.module.css"
+                "re-create.cssModulesPrefix": {
+                    "type": "string",
+                    "default": ".module",
+                    "description": "Css modules prefix"
                 },
                 "re-create.importReact": {
                     "type": "boolean",
                     "default": false,
-                    "description": "import react in a template"
+                    "description": "Import react in a template"
                 }
             }
         }
