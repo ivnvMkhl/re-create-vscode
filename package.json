@@ -8,6 +8,7 @@
         "type": "git",
         "url": "https://github.com/ivnvMkhl/re-create-vscode"
     },
+    "license": "SEE LICENSE IN LICENSE",
     "engines": {
         "vscode": "^1.77.0"
     },
