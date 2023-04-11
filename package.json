@@ -27,6 +27,27 @@
                     "group": "0"
                 }
             ]
+        },
+        "configuration": {
+            "type": "object",
+            "title": "re-create",
+            "properties": {
+                "re-create.createCssFile": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Create ${componentName} css file"
+                },
+                "re-create.useCssModules": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Create ${componentName}.module.css"
+                },
+                "re-create.importReact": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "import react in a template"
+                }
+            }
         }
     },
     "scripts": {
