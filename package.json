@@ -9,6 +9,7 @@
         "url": "https://github.com/ivnvMkhl/re-create-vscode"
     },
     "license": "SEE LICENSE IN LICENSE",
+    "icon": "assets/logo.png",
     "engines": {
         "vscode": "^1.77.0"
     },
