@@ -5,4 +5,12 @@ const normalizePath = (contextSelection: Uri) => {
     return pathSegments.reduce((acc, pathSegment) => (acc += pathSegment + '/'), '');
 };
 
-export { normalizePath };
+const buildPath = (contextPath: string, componentName: string, cssPrefix?: string) => {
+    return {
+        folderPath: `${contextPath}${componentName}`,
+        componentpath: `${contextPath}${componentName}/${componentName}.tsx`,
+        cssPath: `${contextPath}${componentName}/${componentName}${cssPrefix}.css`,
+    };
+};
+
+export { normalizePath, buildPath };
