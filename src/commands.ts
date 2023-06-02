@@ -1,9 +1,14 @@
 import * as vscode from 'vscode';
 import { Uri, window, workspace } from 'vscode';
-import { normalizePath, buildPath } from './utils';
-import { getComponentTemplate } from './templates';
+import { normalizePath, buildPath, parseComponentTemplate } from './utils';
 import { mkdir, writeFile } from 'fs/promises';
 import { PROPERTIES } from './constants';
+
+type Properties = {
+    [PROPERTIES.createCssFile]: boolean | undefined;
+    [PROPERTIES.componentExtension]: string | undefined;
+    [PROPERTIES.componentTemplate]: string[] | undefined;
+};
 
 const createReactComponent = async (contextSelection: Uri, p: { fsPath: string }) => {
     try {
@@ -12,14 +17,25 @@ const createReactComponent = async (contextSelection: Uri, p: { fsPath: string }
         }
 
         const componentName = await getComponentName();
-        const { createCssFile, cssModulesPrefix, importReact } = getPropersties();
+        const properties = [PROPERTIES.createCssFile, PROPERTIES.componentExtension, PROPERTIES.componentTemplate];
+        const { createCssFile, componentExtension, componentTemplate } = getPropersties<Properties>(properties);
         const contextPath = normalizePath(contextSelection);
-        const { folderPath, componentpath, cssPath } = buildPath(contextPath, componentName, cssModulesPrefix);
-        const componentTemplate = getComponentTemplate(componentName, importReact, cssModulesPrefix);
+
+        if (!componentTemplate) {
+            throw new Error('Component template error');
+        }
+
+        const { componentContent, cssModulesPrefix } = parseComponentTemplate(componentTemplate, componentName);
+        const { folderPath, componentpath, cssPath } = buildPath(
+            contextPath,
+            componentName,
+            cssModulesPrefix,
+            componentExtension,
+        );
 
         await mkdir(folderPath);
         await Promise.all([
-            writeFile(componentpath, componentTemplate),
+            writeFile(componentpath, componentContent),
             createCssFile && writeFile(cssPath, new Uint8Array([])),
         ]);
 
@@ -29,14 +45,12 @@ const createReactComponent = async (contextSelection: Uri, p: { fsPath: string }
     }
 };
 
-const getPropersties = () => {
+const getPropersties = <T = Record<string, any>>(propertiesKeys: string[]): T => {
     const { get } = workspace.getConfiguration();
 
-    return {
-        createCssFile: get<boolean>(PROPERTIES.createCssFile),
-        cssModulesPrefix: get<string>(PROPERTIES.cssModulesPrefix),
-        importReact: get<boolean>(PROPERTIES.importReact),
-    };
+    return propertiesKeys.reduce((acc, propName) => {
+        return { ...acc, [propName]: get(`re-create.${propName}`) };
+    }, {} as T);
 };
 
 const getComponentName = async () => {

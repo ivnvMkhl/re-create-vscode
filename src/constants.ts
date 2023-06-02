@@ -5,9 +5,9 @@ const COMMANDS = {
 } as const;
 
 const PROPERTIES = {
-    createCssFile: 're-create.createCssFile',
-    cssModulesPrefix: 're-create.cssModulesPrefix',
-    importReact: 're-create.importReact',
+    createCssFile: 'createCssFile',
+    componentExtension: 'componentExtension',
+    componentTemplate: 'componentTemplate',
 } as const;
 
 export { EXTENSION_NAME, COMMANDS, PROPERTIES };
