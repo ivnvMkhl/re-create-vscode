@@ -43,15 +43,27 @@
                     "default": true,
                     "description": "Create ${componentName} css file"
                 },
-                "re-create.cssModulesPrefix": {
+                "re-create.componentExtension": {
                     "type": "string",
-                    "default": ".module",
-                    "description": "Css modules prefix"
+                    "default": ".tsx",
+                    "description": "React component extension"
                 },
-                "re-create.importReact": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Import react in a template"
+                "re-create.componentTemplate": {
+                    "type": "array",
+                    "default": [
+                        "import { FC } from 'react';",
+                        "",
+                        "import styles from './${componentName}.module.css';",
+                        "",
+                        "type ${componentName}Props = {};",
+                        "",
+                        "const ${componentName}: FC<${componentName}Props> = ({}) => {",
+                        "    return <div></div>;",
+                        "};",
+                        "",
+                        "export { ${componentName} };"
+                    ],
+                    "description": "React component template"
                 }
             }
         }
