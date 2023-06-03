@@ -3,7 +3,7 @@
     "displayName": "re-create",
     "description": "react cli",
     "publisher": "iMkhl",
-    "version": "0.0.42",
+    "version": "0.0.5",
     "repository": {
         "type": "git",
         "url": "https://github.com/ivnvMkhl/re-create-vscode"
