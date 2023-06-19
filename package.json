@@ -48,6 +48,15 @@
                     "default": ".tsx",
                     "description": "React component extension"
                 },
+                "re-create.endOfLine": {
+                    "type": "string",
+                    "default": "LF",
+                    "enum": [
+                        "LF",
+                        "CRLF"
+                    ],
+                    "description": "Select template End of Line"
+                },
                 "re-create.componentTemplate": {
                     "type": "array",
                     "default": [

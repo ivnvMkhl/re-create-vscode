@@ -8,6 +8,7 @@ const PROPERTIES = {
     createCssFile: 'createCssFile',
     componentExtension: 'componentExtension',
     componentTemplate: 'componentTemplate',
+    endOfLine: 'endOfLine',
 } as const;
 
 export { EXTENSION_NAME, COMMANDS, PROPERTIES };
