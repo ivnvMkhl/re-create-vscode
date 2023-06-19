@@ -3,7 +3,7 @@
     "displayName": "re-create",
     "description": "react cli",
     "publisher": "iMkhl",
-    "version": "0.0.42",
+    "version": "0.0.51",
     "repository": {
         "type": "git",
         "url": "https://github.com/ivnvMkhl/re-create-vscode"
@@ -47,6 +47,15 @@
                     "type": "string",
                     "default": ".tsx",
                     "description": "React component extension"
+                },
+                "re-create.endOfLine": {
+                    "type": "string",
+                    "default": "LF",
+                    "enum": [
+                        "LF",
+                        "CRLF"
+                    ],
+                    "description": "Select template End of Line"
                 },
                 "re-create.componentTemplate": {
                     "type": "array",

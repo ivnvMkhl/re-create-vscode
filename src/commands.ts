@@ -8,6 +8,7 @@ type Properties = {
     [PROPERTIES.createCssFile]: boolean | undefined;
     [PROPERTIES.componentExtension]: string | undefined;
     [PROPERTIES.componentTemplate]: string[] | undefined;
+    [PROPERTIES.endOfLine]: 'LF' | 'CRLF';
 };
 
 const createReactComponent = async (contextSelection: Uri, p: { fsPath: string }) => {
@@ -17,15 +18,25 @@ const createReactComponent = async (contextSelection: Uri, p: { fsPath: string }
         }
 
         const componentName = await getComponentName();
-        const properties = [PROPERTIES.createCssFile, PROPERTIES.componentExtension, PROPERTIES.componentTemplate];
-        const { createCssFile, componentExtension, componentTemplate } = getPropersties<Properties>(properties);
+        const properties = [
+            PROPERTIES.createCssFile,
+            PROPERTIES.componentExtension,
+            PROPERTIES.componentTemplate,
+            PROPERTIES.endOfLine,
+        ];
+        const { createCssFile, componentExtension, componentTemplate, endOfLine } =
+            getPropersties<Properties>(properties);
         const contextPath = normalizePath(contextSelection);
 
         if (!componentTemplate) {
             throw new Error('Component template error');
         }
 
-        const { componentContent, cssModulesPrefix } = parseComponentTemplate(componentTemplate, componentName);
+        const { componentContent, cssModulesPrefix } = parseComponentTemplate(
+            componentTemplate,
+            componentName,
+            endOfLine,
+        );
         const { folderPath, componentpath, cssPath } = buildPath(
             contextPath,
             componentName,

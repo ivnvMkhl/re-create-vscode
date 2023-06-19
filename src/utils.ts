@@ -1,5 +1,10 @@
 import { Uri } from 'vscode';
 
+const END_OF_LINE_DICT = {
+    ['LF']: `\n`,
+    ['CRLF']: `\r\n`,
+} as const;
+
 const normalizePath = (contextSelection: Uri) => {
     const pathSegments = contextSelection.fsPath.split('\\');
     return pathSegments.reduce((acc, pathSegment) => (acc += pathSegment + '/'), '');
@@ -25,7 +30,7 @@ const parseStringTemplate = (str: string, obj: Record<string, string>) => {
     return String.raw({ raw: parts }, ...parameters);
 };
 
-const parseComponentTemplate = (template: string[], name: string) => {
+const parseComponentTemplate = (template: string[], name: string, endOfLine: 'LF' | 'CRLF') => {
     const findPrefix = (substring: string) =>
         !substring.includes('css') && !substring.includes('import') && !substring.includes(name);
     const initialReduceValue = { componentContent: '', cssModulesPrefix: '' };
@@ -36,12 +41,12 @@ const parseComponentTemplate = (template: string[], name: string) => {
             if (cssPrefix) {
                 return {
                     ...acc,
-                    componentContent: acc.componentContent + row + '\r\n',
+                    componentContent: acc.componentContent + row + END_OF_LINE_DICT[endOfLine],
                     cssModulesPrefix: '.' + cssPrefix,
                 };
             }
         }
-        return { ...acc, componentContent: acc.componentContent + row + '\r\n' };
+        return { ...acc, componentContent: acc.componentContent + row + END_OF_LINE_DICT[endOfLine] };
     };
 
     const { componentContent, cssModulesPrefix } = template.reduce(reduceCallback, initialReduceValue);
