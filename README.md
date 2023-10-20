@@ -1,5 +1,7 @@
 # Re-create VS Code Extension
 
+https://marketplace.visualstudio.com/items?itemName=iMkhl.re-create
+
 <p>This extension will help you create functional react component from the context menu in VS code file explorer.</p>
 
  - Call context menu on the folder in file explorer:
